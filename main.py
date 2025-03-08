@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(title="PyconId Boilerplate")
+app = FastAPI(title="PyconId Boilerplate!")
 
 app.add_middleware(
     CORSMiddleware,
@@ -14,4 +14,4 @@ app.add_middleware(
 
 @app.get("/")
 async def hello():
-    return {"Hello": "from pyconid boilerplate"}
+    return {"Hello": "from pyconid boilerplate!"}
