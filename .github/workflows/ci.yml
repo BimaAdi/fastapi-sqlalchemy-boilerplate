@@ -43,7 +43,7 @@ jobs:
         run: ruff format
       - name: Lint code with Ruff
         run: ruff check
-      - name: Test with pytest
+      - name: Apply Postgres Migration For Testing
         env:
           ENVIRONTMENT: os
           POSTGRES_HOST: localhost
@@ -53,4 +53,13 @@ jobs:
           POSTGRES_USER: postgres
         run: |
           alembic upgrade head
+      - name: Test with pytest
+        env:
+          ENVIRONTMENT: os
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DATABASE: postgres
+          POSTGRES_USER: postgres
+        run: |
           pytest . -n auto
