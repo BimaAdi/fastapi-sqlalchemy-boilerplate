@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, DeclarativeBase, Session as SqlalchemySession
 
 from settings import (
     POSTGRES_DATABASE,
@@ -16,4 +16,30 @@ engine = create_engine(
     max_overflow=0,
     pool_timeout=300,
 )
-Session = sessionmaker(engine, future=True)
+db = sessionmaker(engine, future=True)
+
+
+def get_db_sync():
+    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+def get_db_sync_for_test(db: SqlalchemySession):
+    def inner():
+        yield db
+
+    return inner
+
+
+class Base(DeclarativeBase):
+    pass
+
+
+# define all model for alembic migration
+from models.User import User  # NOQA
+from models.Token import Token  # NOQA
+from models.RefreshToken import RefreshToken  # NOQA

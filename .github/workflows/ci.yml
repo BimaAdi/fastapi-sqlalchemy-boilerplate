@@ -52,4 +52,5 @@ jobs:
           POSTGRES_DATABASE: postgres
           POSTGRES_USER: postgres
         run: |
-          pytest .
+          alembic upgrade head
+          pytest . -n auto

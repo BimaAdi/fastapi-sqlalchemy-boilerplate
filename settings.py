@@ -1,6 +1,5 @@
 import os
 from core.log import logger
-# from models import engine
 
 if os.environ.get("ENVIRONTMENT") != "os":
     logger.info("load env from file")
@@ -12,6 +11,20 @@ else:
 
 # Environtment
 ENVIRONTMENT = os.environ.get("ENVIRONTMENT")
+
+# JWT conf
+JWT_PREFIX = os.environ.get("JWT_PREFIX", "Bearer")
+SECRET_KEY = os.environ.get("SECRET_KEY")
+ALGORITHM = os.environ.get("ALGORITHM", "HS256")
+ACCESS_TOKEN_EXPIRE_MINUTES = os.environ.get("ACCESS_TOKEN_EXPIRE_MINUTES", 30)
+if ACCESS_TOKEN_EXPIRE_MINUTES is not None:
+    ACCESS_TOKEN_EXPIRE_MINUTES = int(ACCESS_TOKEN_EXPIRE_MINUTES)
+REFRESH_TOKEN_EXPIRE_MINUTES = os.environ.get("REFRESH_TOKEN_EXPIRE_MINUTES", 60)
+if REFRESH_TOKEN_EXPIRE_MINUTES is not None:
+    REFRESH_TOKEN_EXPIRE_MINUTES = int(REFRESH_TOKEN_EXPIRE_MINUTES)
+
+# Timezone
+TZ = os.environ.get("TZ", "Asia/Jakarta")
 
 # Postgresql conf
 POSTGRES_USER = os.environ.get("POSTGRES_USER")
